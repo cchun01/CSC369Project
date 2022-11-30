@@ -16,7 +16,7 @@ for row in reader:
     tomatoRating = row['tomatometer_rating']
     audienceRating = row['audience_rating']
     mWrite.write(
-        f"{movieId}^^{title}^^{info}^^{rating}^^{genres}^^{actors}^^{releaseDate}^^{runtime}^^{productionCompany}^^{tomatoRating}^^{audienceRating}\n")
+        f"{movieId}~~{title}~~{info}~~{rating}~~{genres}~~{actors}~~{releaseDate}~~{runtime}~~{productionCompany}~~{tomatoRating}~~{audienceRating}\n")
 
 rRead = open("rotten_tomatoes_critic_reviews.csv", newline='')
 rWrite = open("rotten_tomatoes_critic_reviews.txt", "w")
@@ -28,7 +28,7 @@ for row in rReader:
     reviewScore = row['review_score']
     reviewContent = row['review_content']
     rWrite.write(
-        f"{movieId}^^{criticName}^^{topCritic}^^{reviewScore}^^{reviewContent}\n"
+        f"{movieId}~~{criticName}~~{topCritic}~~{reviewScore}~~{reviewContent}\n"
     )
 
 # Movies: Id, title, description(info), content rating, genre, actors, original release date, runtime, production company, tomatometer fresh rating, audience rating
