@@ -57,8 +57,8 @@ for row in rReader:
     if len(reviewScore) == 0:
         reviewScore = "null"
     reviewContent = row['review_content']
-    if len(reviewScore) == 0:
-        reviewScore = "null"
+    if len(reviewContent) == 0:
+        reviewContent = "null"
     rWrite.write(
         f"{movieId}~~{criticName}~~{topCritic}~~{reviewScore}~~{reviewContent}\n"
     )
