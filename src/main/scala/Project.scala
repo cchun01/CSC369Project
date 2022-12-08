@@ -46,8 +46,9 @@ object Project {
   def getSimilarMoviesAndRating(trainScaled: RDD[(String, Double, Double, List[Int])],
                                 testScaled2: RDD[(String, Double, Double, List[Int])],
                                 withAudienceRatings: RDD[(String, Iterable[(String, String, String, String)])],
-                                testWithAudienceRatings: RDD[(String, Iterable[(String, String, String, String)])]): (Double, Double, Double)= {
-    val euclidDistMap = trainScaled.cartesian(testScaled2).map({case ((id1, a, c, b), (id2, x, z, y)) => (id1+", "+id2, euclideanDistance(a, x, b, y, c, z))}).sortBy(_._2).take(5)
+                                testWithAudienceRatings: RDD[(String, Iterable[(String, String, String, String)])],
+                                k: Int): (Double, Double, Double)= {
+    val euclidDistMap = trainScaled.cartesian(testScaled2).map({case ((id1, a, c, b), (id2, x, z, y)) => (id1+", "+id2, euclideanDistance(a, x, b, y, c, z))}).sortBy(_._2).take(k)
     val testMovieID = euclidDistMap.toList.head._1.split(", ")(1).trim()
     println("For Movie: " + testMovieID)
     println()
@@ -55,8 +56,21 @@ object Project {
     euclidDistMap.foreach(x => println(x._1 + " " + x._2))
     println()
     val predictedAudienceRatingList = euclidDistMap.map(x=>withAudienceRatings.lookup(x._1.split(",")(0).trim()).toList.head.toList.head._4.toDouble)
-    val predictedAudienceRating = predictedAudienceRatingList.sum/predictedAudienceRatingList.length
+
+    var i = 0
+    var testDataCleaned2 = new ListBuffer[RDD[(String, String, String, List[Int])]]()
+
+    for (i <- predictedAudienceRatingList.indices) {
+      if (i == 0)
+        predictedAudienceRatingList(i) = predictedAudienceRatingList(i) * 0.47
+      else
+        predictedAudienceRatingList(i) = predictedAudienceRatingList(i) * (0.53 / (predictedAudienceRatingList.length - 1))
+    }
+
+    val predictedAudienceRating = predictedAudienceRatingList.sum
+    val actualRating = testWithAudienceRatings.lookup(testMovieID).toList.head.toList.head._4.toDouble
     println("Predicted Rating: " + predictedAudienceRating)
+    println("Actual Rating: " + actualRating)
     (testWithAudienceRatings.lookup(testMovieID).toList.head.toList.head._4.toDouble, predictedAudienceRating, Math.abs(testWithAudienceRatings.lookup(testMovieID).toList.head.toList.head._4.toDouble - predictedAudienceRating))
   }
 
@@ -74,13 +88,13 @@ object Project {
 
     val conf = new SparkConf().setAppName("Project").setMaster("local[1]")
     val sc = new SparkContext(conf)
-    
+
     val practiceMovies = sc.textFile("src/main/scala/practiceTrain.txt")
     val testMovies = sc.textFile("src/main/scala/smallerTest.txt")
-    val scoreAndRating = practiceMovies.map(line => (line.split("~~")(0),line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10))).filter(x=>x._1 != "null" && x._2 != "null" && x._3 != "null" && x._4 != "null" && x._5 != "null")
-    val testScoreAndRating = testMovies.map(line => (line.split("~~")(0),line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10))).filter(x=>x._1 != "null" && x._2 != "null" && x._3 != "null" && x._4 != "null" && x._5 != "null")
-    val scoreAndRatingGroup = practiceMovies.map(line => (line.split("~~")(0),(line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10)))).filter(x=>x._1 != "null" && x._2._1 != "null" && x._2._2 != "null" && x._2._3 != "null" && x._2._4 != "null")
-    val testScoreAndRatingGroup = testMovies.map(line => (line.split("~~")(0),(line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10)))).filter(x=>x._1 != "null" && x._2._1 != "null" && x._2._2 != "null" && x._2._3 != "null" && x._2._4 != "null")
+    val scoreAndRating = practiceMovies.filter(x=>x.split("~~").length == 11).map(line => (line.split("~~")(0),line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10))).filter(x=>x._1 != "null" && x._2 != "null" && x._3 != "null" && x._4 != "null" && x._5 != "null")
+    val testScoreAndRating = testMovies.filter(x=>x.split("~~").length == 11).map(line => (line.split("~~")(0),line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10))).filter(x=>x._1 != "null" && x._2 != "null" && x._3 != "null" && x._4 != "null" && x._5 != "null")
+    val scoreAndRatingGroup = practiceMovies.filter(x=>x.split("~~").length == 11).map(line => (line.split("~~")(0),(line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10)))).filter(x=>x._1 != "null" && x._2._1 != "null" && x._2._2 != "null" && x._2._3 != "null" && x._2._4 != "null")
+    val testScoreAndRatingGroup = testMovies.filter(x=>x.split("~~").length == 11).map(line => (line.split("~~")(0),(line.split("~~")(3), line.split("~~")(7), line.split("~~")(9), line.split("~~")(10)))).filter(x=>x._1 != "null" && x._2._1 != "null" && x._2._2 != "null" && x._2._3 != "null" && x._2._4 != "null")
     val withAudienceRatings = scoreAndRatingGroup.groupByKey()
     val testWithAudienceRatings = testScoreAndRatingGroup.groupByKey()
 
@@ -104,7 +118,7 @@ object Project {
 
     var trueAndPred = new ListBuffer[(Double, Double, Double)]()
     val testDataCleaned3 = testDataCleaned2.map(x => getDataParallelized(x, scoreMean, scoreSD, runtimeMean, runtimeSD))
-    testDataCleaned3.foreach(x=>trueAndPred += getSimilarMoviesAndRating(trainScaled, x, withAudienceRatings, testWithAudienceRatings))
+    testDataCleaned3.foreach(x=>trueAndPred += getSimilarMoviesAndRating(trainScaled, x, withAudienceRatings, testWithAudienceRatings, k = 3))
 
     val mse = trueAndPred.map({case(x,y,z)=> Math.pow(x-y, 2)}).sum/trueAndPred.length
     val avgDiff = trueAndPred.map({case(x,y,z)=> z}).sum/trueAndPred.length
