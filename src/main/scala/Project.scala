@@ -1,45 +1,25 @@
 import org.apache.log4j.{Level, Logger}
+import org.apache.spark.SparkContext._
+import scala.io._
 import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.rdd.RDD._
+import scala.collection._
 
 object Project {
-
-  def mapCR(x: String): Int = {
-    x match {
-      case "G" =>
-        0
-      case "PG" =>
-        1
-      case "PG-13" =>
-        2
-      case "R" =>
-        3
-      case "NC17" =>
-        4
-      case "NR" =>
-        5
-    }
-  }
-
-  def crToCROneHot(x : Int, y : Int): Int = {
-    if (x == y)
-      1
-    else
-      0
-  }
-
-  def euclideanDistance(xScore: Double, yScore: Double, xRating: List[Int], yRating: List[Int]): Double = {
-    var dist = 0.0
-    val ratingsMap = xRating.zip(yRating)
-    val vectorDist = ratingsMap.map{
-      case(ui, vi) => Math.pow(ui - vi, 2.0)
-    }.sum
-    println(vectorDist)
-    dist += Math.pow(xScore - yScore, 2.0)
-    dist += vectorDist
-    Math.sqrt(dist)
-  }
-
-
+//  def calculateScore(score: String) : Double = score match{
+//    case "A" => 4
+//    case "A-" => 3.7
+//    case "B+" => 3.3
+//    case "B" => 3
+//    case "B-" => 2.7
+//    case "C+" => 2.3
+//    case "C" => 2
+//    case "C-" => 1.7
+//    case "D+" => 1.3
+//    case "D" => 1
+//    case "F" => 0
+//    case _ => 0
+//  }
   def main(args: Array[String]): Unit = {
     Logger.getLogger("org").setLevel(Level.OFF)
     Logger.getLogger("akka").setLevel(Level.OFF)
@@ -50,44 +30,80 @@ object Project {
     val reviews = sc.textFile("src/main/scala/rotten_tomatoes_critic_reviews.txt")
     val movies = sc.textFile("src/main/scala/rotten_tomatoes_movies.txt")
 
-//    val moviesMap = movies.map(line =>
-//      (line.split("~~")(0), //movieId
-//        line.split("~~")(1), //Title
-//        line.split("~~")(2), //description
-//        line.split("~~")(3), //content rating
-//        line.split("~~")(4), //genre
-//        line.split("~~")(5), //actors
-//        line.split("~~")(6), //releaseDate
-//        line.split("~~")(7), //runtime
-//        line.split("~~")(8), //productionCompany
-//        line.split("~~")(9), //criticRating
-//        line.split("~~")(10) //audienceRating
-//      )
-//    )
+    val moviesMap = movies.map(line =>
+      (line.split("~~")(0), //movieId
+        line.split("~~")(1), //Title
+        line.split("~~")(2), //description
+        line.split("~~")(3), //content rating
+        line.split("~~")(4), //genre
+        line.split("~~")(5), //actors
+        line.split("~~")(6), //releaseDate
+        line.split("~~")(7), //runtime
+        line.split("~~")(8), //productionCompany
+        line.split("~~")(9), //criticRating
+        line.split("~~")(10) //audienceRating
+      )
+    )
 
-//    val reviewsMap = reviews.map(line =>
-//      (line.split("~~")(0), //movieId
-//        (line.split("~~")(1), //criticName
-//        line.split("~~")(2), //topCritic
-//        line.split("~~")(3), //reviewScore
-//        line.split("~~")(4)) //reviewContent
-//      ))
+    val reviewsMap = reviews.map(line =>
+      (line.split("~~")(0), //movieId
+        line.split("~~")(1), //criticName
+        line.split("~~")(2), //topCritic
+        line.split("~~")(3), //reviewScore
+        line.split("~~")(4) //reviewContent
+      ))
 
-//    val contentRatings = movies.map(line => line.split("~~")(3))
-//    val criticScore = movies.map(line => line.split("~~")(9))
-    val practiceMovies = sc.textFile("src/main/scala/practiceTrain.txt")
-    val scoreAndRating = practiceMovies.map(line => (line.split("~~")(0),line.split("~~")(3), line.split("~~")(9)))
+    // compute the average audience rating for movies made by the same production company
+    val criticRating = moviesMap.map{case(movieId, title, description, cr, genre, actors, rdate, runtime, company, crating, arating)
+       => (company, crating)}.filter { x => x._2 != "null" }
+      .mapValues(v => (v.toInt, 1))
+      .reduceByKey((x, y) => (x._1 + y._1, x._2 + y._2))
+      .mapValues{ case(x,y) => x*1.0/y}
+      .collect().foreach(println(_))
 
-    val scoreAndRatingMapped = scoreAndRating.map({case (id, x,y) => (id, y, mapCR(x))}).map({case (id, score, rating) => (id, score, List(crToCROneHot(rating, 0),crToCROneHot(rating, 1),crToCROneHot(rating, 2),crToCROneHot(rating, 3),crToCROneHot(rating, 4),crToCROneHot(rating, 5)))})
-    val scoreMean = (scoreAndRating.map({case (id, x, y) => y.toInt}).collect().sum)*1.0/scoreAndRating.count()
-    val scoreSD = Math.sqrt((scoreAndRating.map({case (id, x, y) => (y.toInt*1.0 - scoreMean)*(y.toInt*1.0 - scoreMean)}).collect().sum)*1.0/scoreAndRating.count())
+    // compute the average critics rating for each movie production company
+    val audienceRating = moviesMap.map { case (movieId, title, description, cr, genre, actors, rdate, runtime, company, crating, arating)
+      => (company, arating)}.filter { x => x._2 != "null" }
+      .mapValues(v => (v.toInt, 1))
+      .reduceByKey((x, y) => (x._1 + y._1, x._2 + y._2))
+      .mapValues { case (x, y) => x * 1.0 / y }
+      .collect().foreach(println(_))
 
-    val trainScaled = scoreAndRatingMapped.map({case (id, x,y) => (id, (x.toDouble - scoreMean)/scoreSD, y)})
+    // the 10 movie production companies with the highest rating from audience
+    println("movie companies with the highest audience rating: ")
+    audienceRating.sortBy(r=>(r._2), false).take(10).foreach(println(_))
 
-    val testScaled = sc.parallelize(List(("m/10008607-day_of_the_dead",13, List(0, 0, 0, 1, 0, 0))))
-    val testScaled2 = testScaled.map({case (id, x,y) => (id, (x.toDouble - scoreMean)/scoreSD, y)})
+    // the 10 movie production companies with the highest rating from critics
+    println("movie companies with the highest critics rating: ")
+    criticRating.sortBy(r => (r._2), false).take(10).foreach(println(_))
 
-    val euclidDistMap = trainScaled.cartesian(testScaled2).map({case ((id1, a, b), (id2, x, y)) => (id1+", "+id2, euclideanDistance(a, x, b, y))}).sortBy(_._2)
-    euclidDistMap.foreach(x => println(x._1 + " " + x._2))
+    // the 10 movie production companies with the lowest rating from audience
+    println("movie companies with the lowest audience rating: ")
+    audienceRating.sortBy(r => (r._2), true).take(10).foreach(println(_))
+
+    // the 10 movie production companies with the lowest rating from critics
+    println("movie companies with the lowest critics rating: ")
+    criticRating.sortBy(r => (r._2), true).take(10).foreach(println(_))
+
+    // top 10 critics that wrote most reviews on movie
+      reviewsMap.map { case (movieId, criticName, topCritic, reviewScore, reviewContent)
+        => (criticName, 1) }.filter { x => x._1 != "null" }
+        .reduceByKey{ case (x, y) => (x+y) }.sortBy(_._2, false)
+        .collect.take(10).foreach(println(_))
+
+    // top 10 top critics that wrote most reviews on movie
+    reviewsMap.map { case (movieId, criticName, topCritic, reviewScore, reviewContent)
+      => (criticName, topCritic, 1)
+      }.filter{ x => x._1 != "null" }.filter{x => x._2 == "True"}
+      .map{case(x, y ,z) => (x,z)}
+      .reduceByKey { case (x, y) => (x + y) }
+      .sortBy(_._2, false)
+      .collect.take(10).foreach(println(_))
+
+    // find the top 10 movie with the highest review score
+//    reviewsMap.map { case (movieId, criticName, topCritic, reviewScore, reviewContent)
+//      => (movieId, reviewScore)}.filter { x => x._2 != "null" }
+//      .mapValues{(v=>calculateScore(v))}
+//      .collect.foreach(println(_))
   }
 }
