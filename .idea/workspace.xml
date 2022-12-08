@@ -20,12 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff480d75-ba67-45df-a6d7-0a6b659e648e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/CSC369Project.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/Project.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Project.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +30,9 @@
   </component>
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/colin" />
   </component>
   <component name="Git.Pull.Settings">
     <option name="BRANCH" value="vicky" />
@@ -94,7 +92,7 @@
       <workItem from="1670472892891" duration="69000" />
       <workItem from="1670473038044" duration="90000" />
       <workItem from="1670473358799" duration="283000" />
-      <workItem from="1670526029385" duration="52000" />
+      <workItem from="1670526029385" duration="864000" />
     </task>
     <servers />
   </component>
@@ -117,10 +115,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="317" y="292" key="#Notifications/0.23.1440.877@0.23.1440.877" timestamp="1670526080559" />
-    <state x="239" y="123" width="1071" height="772" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1670473412694">
+    <state x="239" y="104" width="1071" height="796" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1670526845906">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="239" y="123" width="1071" height="772" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1670473412694" />
+    <state x="239" y="104" width="1071" height="796" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1670526845906" />
     <state x="578" y="384" width="408" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog" timestamp="1670473067311">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -145,9 +143,17 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1075" height="231" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1670473641870" />
+    <state x="186" y="201" key="Vcs.Push.Dialog.v2" timestamp="1670526194156">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="186" y="201" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1670526194156" />
     <state x="300" y="107" width="917" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1670473642001">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="300" y="107" width="917" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1670473642001" />
+    <state x="388" y="382" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1670526163891">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="388" y="382" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1670526163891" />
   </component>
 </project>
