@@ -153,11 +153,19 @@ object Project {
     val topRatio = avgDesc.filter(_._2 != 1.0).sortBy(_._2, false).take(10)
 
     println("Top 10 Distinct Word Count Per Critic")
-    topCount.foreach(x => println(x._1 + ": " + x._2 + " words"))
+    topCount.foreach(x => println(x._1 + ": " + x._2 + " distinct words"))
 
     println()
     println("Top 10 Distinct to Word Ratio")
-    topRatio.foreach(x => println(x._1 + ": " + x._2 + " words"))
+    topRatio.foreach(x => println(x._1 + ": " + x._2))
+
+//    println()
+//    println("For Distinct Word Count Per Critic")
+//    descLst.collect().foreach(x => println(x._1 + ": " + x._2 + " distinct words out of " + x._3))
+//
+//    println()
+//    println("Critic Distinct Count Compared to All Critics")
+//    avgDesc.collect().foreach(x => println("Critic " + x._1 + " Distinct Score: " + x._2))
 
   }
 }
