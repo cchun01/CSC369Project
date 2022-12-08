@@ -2,6 +2,7 @@ import org.apache.log4j.{Level, Logger}
 import org.apache.spark.{SparkConf, SparkContext}
 
 object Project {
+<<<<<<< Updated upstream
 
   def mapCR(x: String): Int = {
     x match {
@@ -40,12 +41,15 @@ object Project {
   }
 
 
+=======
+>>>>>>> Stashed changes
   def main(args: Array[String]): Unit = {
     Logger.getLogger("org").setLevel(Level.OFF)
     Logger.getLogger("akka").setLevel(Level.OFF)
 
     val conf = new SparkConf().setAppName("Project").setMaster("local[1]")
     val sc = new SparkContext(conf)
+<<<<<<< Updated upstream
 
     val reviews = sc.textFile("src/main/scala/rotten_tomatoes_critic_reviews.txt")
     val movies = sc.textFile("src/main/scala/rotten_tomatoes_movies.txt")
@@ -89,5 +93,61 @@ object Project {
 
     val euclidDistMap = trainScaled.cartesian(testScaled2).map({case ((id1, a, b), (id2, x, y)) => (id1+", "+id2, euclideanDistance(a, x, b, y))}).sortBy(_._2)
     euclidDistMap.foreach(x => println(x._1 + " " + x._2))
+=======
+
+    val reviews = sc.textFile("src/main/scala/rotten_tomatoes_critic_reviews.txt")
+    val movies = sc.textFile("src/main/scala/rotten_tomatoes_movies.txt")
+
+    val moviesMap = movies.map(line =>
+      (line.split("~~")(0), //movieId
+        line.split("~~")(1), //Title
+        line.split("~~")(2), //description
+        line.split("~~")(3), //content rating
+        line.split("~~")(4), //genre
+        line.split("~~")(5), //actors
+        line.split("~~")(6), //releaseDate
+        line.split("~~")(7), //runtime
+        line.split("~~")(8), //productionCompany
+        line.split("~~")(9), //criticRating
+        line.split("~~")(10) //audienceRating
+      )
+    )
+
+    val reviewsMap = reviews.map(line =>
+      (line.split("~~")(0), //movieId
+        line.split("~~")(1), //criticName
+        line.split("~~")(2), //topCritic
+        line.split("~~")(3), //reviewScore
+        line.split("~~")(4) //reviewContent
+      ))
+
+>>>>>>> Stashed changes
+
+    val criticMap = reviewsMap.map(line => (line._2, line._5.toLowerCase().replaceAll("[^a-zA-Z0-9]", " ").replaceAll("""\s+""", " ").split(" ").mkString(" "))).filter(_._1  != "null")
+
+    val criticDesc = criticMap.reduceByKey(_+ " " +_)
+
+    val descLst = criticDesc.map(line => (line._1, line._2.toString.split(" ").distinct.size, line._2.toString.split(" ").size))
+
+    val topCount = descLst.map(x => (x._1, x._2)).sortBy(_._2, false).take(10)
+
+    val avgDesc = descLst.map(x => (x._1, x._2.toDouble/x._3))
+
+    val topRatio = avgDesc.filter(_._2 != 1.0).sortBy(_._2, false).take(10)
+
+    println("Top 10 Distinct Word Count Per Critic")
+    topCount.foreach(x => println(x._1 + ": " + x._2 + " words"))
+
+    println()
+    println("Top 10 Distinct to Word Ratio")
+    topRatio.foreach(x => println(x._1 + ": " + x._2 + " words"))
+
+    //    println()
+    //    println("For Distinct Word Count Per Critic")
+    //    descLst.collect().foreach(x => println(x._1 + ": " + x._2 + " words out of " + x._3))
+    //
+    //    println()
+    //    println("Critic Distinct Count Compared to All Critics")
+    //    avgDesc.collect().foreach(x => println("Critic " + x._1 + " Score: " + x._2))
   }
 }

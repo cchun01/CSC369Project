@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ff480d75-ba67-45df-a6d7-0a6b659e648e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/CSC369Project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Project.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Project.scala" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="vicky" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="2IcFIl2toXXTpiOMcUUv5PRkoLg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Project" />
+      <module name="CSC369Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ff480d75-ba67-45df-a6d7-0a6b659e648e" name="Default Changelist" comment="" />
+      <created>1670472889387</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670472889387</updated>
+      <workItem from="1670472892891" duration="69000" />
+      <workItem from="1670473038044" duration="90000" />
+      <workItem from="1670473358799" duration="283000" />
+      <workItem from="1670526029385" duration="52000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="317" y="292" key="#Notifications" timestamp="1670526080559">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="317" y="292" key="#Notifications/0.23.1440.877@0.23.1440.877" timestamp="1670526080559" />
+    <state x="239" y="123" width="1071" height="772" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1670473412694">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="239" y="123" width="1071" height="772" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1670473412694" />
+    <state x="578" y="384" width="408" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog" timestamp="1670473067311">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="578" y="384" width="408" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog/0.23.1440.877@0.23.1440.877" timestamp="1670473067311" />
+    <state x="512" y="270" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1670473411751">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="512" y="270" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1440.877@0.23.1440.877" timestamp="1670473411751" />
+    <state width="1075" height="231" key="GridCell.Tab.0.bottom" timestamp="1670473641871">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1075" height="231" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1670473641871" />
+    <state width="1075" height="231" key="GridCell.Tab.0.center" timestamp="1670473641870">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1075" height="231" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1670473641870" />
+    <state width="1075" height="231" key="GridCell.Tab.0.left" timestamp="1670473641870">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1075" height="231" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1670473641870" />
+    <state width="1075" height="231" key="GridCell.Tab.0.right" timestamp="1670473641870">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1075" height="231" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1670473641870" />
+    <state x="300" y="107" width="917" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1670473642001">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="300" y="107" width="917" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1670473642001" />
+  </component>
+</project>
