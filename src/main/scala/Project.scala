@@ -37,9 +37,9 @@ object Project {
       case(ui, vi) => Math.pow(ui - vi, 2.0)
     }.sum
 
-    dist += 0.7 * Math.pow(xScore - yScore, 2.0)
-    dist += 0.1 * Math.pow(xRuntime - yRuntime, 2.0)
-    dist += 0.2 * vectorDist
+    dist += 0.901 * Math.pow(xScore - yScore, 2.0)
+    dist += 0.009 * Math.pow(xRuntime - yRuntime, 2.0)
+    dist += 0.048 * vectorDist
     Math.sqrt(dist)
   }
 
